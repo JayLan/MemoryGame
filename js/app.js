@@ -39,23 +39,75 @@ function shuffle(array) {
 
 
 var cardList = [];
+var matchCounter = 0;
+var scoreCounter = 0;
 
 document.querySelector('.deck').addEventListener('click', function(evt){
-    if(evt.target.nodeName === 'LI'){
+    let tgt = evt.target;
+    if(tgt.nodeName === 'LI'){
         console.log("li was clicked");
+        openCard(tgt);
+
+        listCard(tgt);
+        
+/*         console.log("here " + tgt.childNodes[1].nodeName);
+ */        /* for(let i = 0; i < tgt.childNodes.length; i++){
+            console.log(tgt.childNodes[i]);
+        } */
+        //
+
     }
 })
 
+function openCard(tgt){
+    tgt.setAttribute('class', 'card open show');
+}
 
-function checkMatch() {
+function listCard(tgt){
+    let tgtClass = tgt.childNodes[1].className;
+    if(cardList.length == 1){
+        checkMatch(tgtClass, tgt);
+    } else{
+        cardList.push(tgtClass);
+    }
+
+    
+}
+
+function checkMatch(tgtClass, tgt) {
+    if(tgtClass == cardList[0]){
+        console.log("We have a match!");
+        lockCards(tgtClass);
+    }else{
+        //noMatch(tgt);
+        console.log("set to card");
+        setTimeout(() => {
+            tgt.setAttribute('class', 'card');
+            cardList[0].setAttribute('class', 'card');
+        }, 3000);
+        cardList.pop();
+        cardList.pop();
+    }
+
+    
+}
+
+function lockCards(tgtClass) {
+    let matches = document.getElementsByClassName(tgtClass);
+    for(let i = 0; i < matches.length; i++){
+        matches[i].parentElement.setAttribute('class', 'card match');
+        console.log("node: " + matches[i].nodeName);
+    }
+}
+
+function noMatch(tgt) {
+    
+    console.log("noMatch: " + tgt.className);
+
+    //tgt.setAttribute('class', 'card');
 
 }
 
-function lockCards() {
-
-}
-
-function noMatch() {
-
-
+function bigWinner() {
+    console.log("Winner Winner Chicken Dinner!");
 }
