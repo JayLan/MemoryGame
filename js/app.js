@@ -78,6 +78,10 @@ function checkMatch(tgtClass, tgt) {
     if(tgtClass == cardList[0]){
         console.log("We have a match!");
         lockCards(tgtClass);
+        matchCounter++;
+        if(matchCounter = 8){
+            bigWinner();
+        }
     }else{
         //noMatch(tgt);
         console.log("set to card");
